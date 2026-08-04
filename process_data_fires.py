@@ -32,6 +32,7 @@ perimeter_cols = [  'geometry',
 
 
 df_perimeters = df_perimeters[df_perimeters['FIRE_YEAR'] >= 2019]
+df_perimeters = df_perimeters[df_perimeters['FIRE_YEAR'] <= 2023]
 # df_perimeters = df_perimeters.rename(columns={'geometry': 'perimeter_geometry'})
 
 # keep only the newest version of the entry:
@@ -42,6 +43,7 @@ df_perimeters = df_perimeters[perimeter_cols]
 
 
 df_fire = df_fire[df_fire['FIRE_YEAR'] >= 2019]
+df_fire = df_fire[df_fire['FIRE_YEAR'] <= 2023]
 # df_fire = df_fire.rename(columns={'geometry': 'point_geometry'})
 
 fire_cols = [   'LATITUDE',
