@@ -1,6 +1,6 @@
 # datasets
-raw_data/
-intermediate_data/
+# raw_data/
+# intermediate_data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
