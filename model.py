@@ -8,7 +8,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import StratifiedKFold, cross_validate, cross_val_predict
 import xgboost as xgb
-
+import matplotlib.pyplot as plt
 
 # read in df
 df = pd.read_csv('fires_final_dataset.csv')
@@ -144,3 +144,23 @@ summary = summary.set_index('Model')
 
 print('\nModel comparison - values are from the max fold:')
 print(summary)
+
+ax = summary.plot(kind='bar', figsize=(9, 5))
+plt.ylabel('Score')
+plt.xlabel('Model')
+plt.title('Cross-Validated Model Performance')
+plt.xticks(rotation=0)
+plt.ylim(0, 1.05)
+
+# add percentage above each bar
+for container in ax.containers:
+    ax.bar_label(container, labels=[f'{value:.0%}' for value in container.datavalues], padding=3)
+
+plt.legend()
+plt.tight_layout()
+plt.savefig('plots/model_performance.png')
+# plt.show()
+plt.close()
+
+
+
