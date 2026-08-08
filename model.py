@@ -154,7 +154,7 @@ plt.ylim(0, 1.05)
 
 # add percentage above each bar
 for container in ax.containers:
-    ax.bar_label(container, labels=[f'{value:.0%}' for value in container.datavalues], padding=3)
+    ax.bar_label(container, labels=[f'{value:.2f}' for value in container.datavalues], padding=3)
 
 plt.legend()
 plt.tight_layout()

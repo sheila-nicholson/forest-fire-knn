@@ -42,16 +42,16 @@ fire_class = pd.Series(0, index=X.index, name='fire_size_class')
 moderate = X['FIRE_SIZE_HECTARES'] >= 100
 
 fire_class.loc[moderate] = 1
-
+# classification boundary: 10^2 = 100 hectares
+plt.axvline(x=2, color='red', linestyle='--', linewidth=2, label='100 ha classification boundary')
 # look at the distribution of fire sizes
-plt.hist(np.log10(df['FIRE_SIZE_HECTARES'] + 1), bins=30) # + 1 so there is no log 0
+plt.hist(np.log10(df['FIRE_SIZE_HECTARES'] + 1),bins=30,edgecolor='black',linewidth=0.8)
 plt.xlabel('log10(Fire Size in Hectares)')
 plt.ylabel('Number of Fires')
 plt.title('Distribution of Wildfire Sizes')
 plt.savefig('plots/dist_wf_size.png')
-# plt.show()
-plt.close() 
 
+plt.close()
 
 # compare the 7d temperature of small and large(>=100 hectares) fires 
 small = df[df['FIRE_SIZE_HECTARES'] < 100]['avg_tmp_7d'].dropna()
@@ -61,7 +61,7 @@ plt.boxplot([small, large], labels=['< 100 ha', '>= 100 ha'])
 plt.xlabel('Fire Size Class')
 plt.ylabel('Average Temperature (°C)')
 plt.title('7-Day Average Temperature Before Ignition')
-plt.savefig('plots/violin_7dtemp.png')
+plt.savefig('plots/box_7dtemp.png')
 # plt.show()
 plt.close() 
 
@@ -73,7 +73,35 @@ plt.boxplot([small, large], labels=['< 100 ha', '>= 100 ha'])
 plt.xlabel('Fire Size Class')
 plt.ylabel('Total precipitation in last 30 days (mm)')
 plt.title('30-Day Total Precipitation Before Ignition')
-plt.savefig('plots/violin_30dprecp.png')
+plt.savefig('plots/box_30dprecp.png')
+# plt.show()
+plt.close() 
+
+# compare the avg_hmd_7d of small and large(>=100 hectares) fires 
+small = df[df['FIRE_SIZE_HECTARES'] < 100]['avg_hmd_7d'].dropna()
+large = df[df['FIRE_SIZE_HECTARES'] >= 100 ]['avg_hmd_7d'].dropna()
+
+
+
+plt.boxplot([small, large], labels=['< 100 ha', '>= 100 ha'])
+plt.xlabel('Fire Size Class')
+plt.ylabel('Average relative humidity in last 7 days (%)')
+plt.title('7-Day Average Humidity Before Ignition')
+plt.savefig('plots/box_7dhumid.png')
+# plt.show()
+plt.close() 
+
+# compare the population of small and large(>=100 hectares) fires 
+small = df[df['FIRE_SIZE_HECTARES'] < 100]['POPULATION'].dropna()
+large = df[df['FIRE_SIZE_HECTARES'] >= 100 ]['POPULATION'].dropna()
+
+
+plt.figure(figsize=(10, 6))
+plt.boxplot([small, large], labels=['< 100 ha', '>= 100 ha'])
+plt.xlabel('Fire Size Class')
+plt.ylabel('Nearest municipality population')
+plt.title('Nearest Municiplaity Population')
+plt.savefig('plots/box_pop.png')
 # plt.show()
 plt.close() 
 
@@ -85,7 +113,7 @@ plt.boxplot([small, large], labels=['< 100 ha', '>= 100 ha'])
 plt.xlabel('Fire Size Class')
 plt.ylabel('Distance to closest municiplaity (km)')
 plt.title('Distance to closest municiplaity')
-plt.savefig('plots/violin_dist_munp.png')
+plt.savefig('plots/box_dist_munp.png')
 # plt.show()
 plt.close()
 
